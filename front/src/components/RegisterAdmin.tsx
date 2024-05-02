@@ -1,5 +1,5 @@
 import { useState } from "react"
-function Register() { 
+function RegisterAdmin() { 
     const [nombre, setNombre] = useState("")
     const [password, setPassword] = useState("") 
     return (
@@ -16,4 +16,4 @@ function Register() {
     )
 }
 
-export default Register
+export default RegisterAdmin
