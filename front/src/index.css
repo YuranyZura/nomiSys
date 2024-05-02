@@ -1,0 +1,12 @@
+.pagina{
+    background-color: beige;
+    font-size: large;
+    margin: 10px;
+    padding: 10px;
+}
+#btn-enviar{
+    margin: 10px;
+    padding: 10px;
+    background-color: #09f;
+    color: rgb(0, 0, 0);
+}
