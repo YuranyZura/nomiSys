@@ -1,8 +1,9 @@
 import { useState } from "react";
-//import { Button } from "./ui/button";
+import { Button } from "./ui/button";
 
 function RegisterAdmin() {
   const [nombre, setNombre] = useState("");
+  const [doc, setDoc] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   return (
@@ -11,14 +12,14 @@ function RegisterAdmin() {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         type="email"
-        placeholder=""
+        placeholder="Email"
       />
       <form>
         <input
           value={nombre}
           onChange={(event) => setNombre(event.target.value)}
           type="text"
-          placeholder=""
+          placeholder="Nombre"
         />
         <input
           value={password}
@@ -26,7 +27,7 @@ function RegisterAdmin() {
           type="password"
           placeholder="*********"
         />
-        <button
+        <Button
           className="bg-red-500"
           id="btn-enviar"
           type="button"
@@ -36,8 +37,20 @@ function RegisterAdmin() {
           }}
         >
           Enviar
-        </button>
+        </Button>
       </form>
+      <input
+        value={doc}
+        onChange={(event) => setDoc(event.target.value)}
+        type="text"
+        placeholder="Documento"
+      />
+      <input
+        value={doc}
+        onChange={(event) => setDoc(event.target.value)}
+        type="text"
+        placeholder=""
+      />
     </div>
   );
 }
