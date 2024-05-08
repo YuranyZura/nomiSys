@@ -11,10 +11,15 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/registerAdmin" element={<RegisterAdmin/>}/>
       <Route path="/registerPropietary" element={<SignupPropietary/>}/>
-    </Routes> 
+      <Route />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registerAdmin" element={<RegisterAdmin />} />
+     <Routes/> 
+      <div className="bg-red-600">
+        <h1>hello</h1>
+      </div>
     </div>
   );
 }
-
 
 export default App;
