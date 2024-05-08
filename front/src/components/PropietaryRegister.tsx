@@ -13,69 +13,34 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  username: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
-  }),
-  doc: z
-    .string()
-    .min(6, {
-      message: "Password must be at least 8 characters.",
-    })
-    .max(11, {
-      message: "Password must be at least 8 characters.",
-    }),
-  direccion: z
-    .string()
-    .min(8, {
-      message: "Password must be at least 8 characters.",
-    })
-    .optional(),
-  telefono: z
-    .string()
-    .min(8, {
-      message: "Password must be at least 8 characters.",
-    })
-    .optional(),
-  email: z.string().email({
-    message: "Invalid email.",
-  }),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  passwordConfirmation: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-  noCuenta: z.string().min(8, { 
-    message: "Password must be at least 8 characters.",
-  }),
-});
+import { propietarioSchema } from "@/zod/PropietarioSchema";
 
 export function SignupPropietary() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof propietarioSchema>>({
+    resolver: zodResolver(propietarioSchema),
     defaultValues: {
       username: "",
       doc: "",
-      direccion: "",
-      telefono: "",
+      address: "",
+      phone: "",
       email: "",
       password: "",
-      passwordConfirmation: "",
+      confirmPassword: "",
       noCuenta: "",
     },
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof propietarioSchema>) {
     console.log(values);
   }
 
   return (
-    <Card className="w-full md:w-1/3 mx-auto md:my-[300px]">
+    <Card className="w-full md:w-1/3 absolute right-12 top-44 ">
       <CardHeader>
-        <CardTitle>Formulario de registro</CardTitle>
+        <CardTitle className="font-bold text-3xl">
+          Formulario de registro
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -83,7 +48,7 @@ export function SignupPropietary() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8  px-2"
           >
-            <div className="flex flex-col justify-between md:flex-row  ">
+            <div className="flex flex-col justify-between md:flex-row ">
               <FormField
                 control={form.control}
                 name="username"
@@ -140,7 +105,7 @@ export function SignupPropietary() {
               />
               <FormField
                 control={form.control}
-                name="telefono"
+                name="phone"
                 render={({ field }) => (
                   <FormItem className="w-full md:w-5/12">
                     <FormLabel>Telefono</FormLabel>
@@ -154,6 +119,38 @@ export function SignupPropietary() {
               />
             </div>
 
+            <div className="flex flex-col justify-between md:flex-row ">
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="w-full md:w-5/12">
+                    <FormLabel>Direccion</FormLabel>
+                    <FormControl>
+                      <Input placeholder="CL 99B # 33-22" {...field} />
+                    </FormControl>
+                    <FormDescription>Este es tu direccion.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="noCuenta"
+                render={({ field }) => (
+                  <FormItem className="w-full md:w-5/12">
+                    <FormLabel>Numero de Cuenta Bancaria</FormLabel>
+                    <FormControl>
+                      <Input placeholder="232323232" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Este es tu cuenta bancaria bancolombia.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <div className="flex flex-col justify-between md:flex-row ">
               <FormField
                 control={form.control}
@@ -175,7 +172,7 @@ export function SignupPropietary() {
               />
               <FormField
                 control={form.control}
-                name="passwordConfirmation"
+                name="confirmPassword"
                 render={({ field }) => (
                   <FormItem className="w-full md:w-5/12">
                     <FormLabel>Confirmacion contraseña</FormLabel>
@@ -194,43 +191,14 @@ export function SignupPropietary() {
                 )}
               />
             </div>
-
-            <div className="flex flex-col justify-between md:flex-row ">
-              <FormField
-                control={form.control}
-                name="direccion"
-                render={({ field }) => (
-                  <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Direccion</FormLabel>
-                    <FormControl>
-                      <Input placeholder="CL 99B # 33-22" {...field} />
-                    </FormControl>
-                    <FormDescription>Este es tu direccion.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="noCuenta"
-                render={({ field }) => (
-                  <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Numero de Cuenta Bancaria</FormLabel>
-                    <FormControl>
-                      <Input placeholder="232323232" {...field} />
-                    </FormControl>
-                    <FormDescription>Este es tu cuenta bancaria bancolombia.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="flex justify-center">
+              <Button
+                type="submit"
+                className="bg-green-800 hover:bg-green-600 text-lg"
+              >
+                Registrarse
+              </Button>
             </div>
-            <Button
-              type="submit"
-              className="bg-red-800 hover:bg-blue-600 md:bg-green-400"
-            >
-              Submit
-            </Button>
           </form>
         </Form>
       </CardContent>
