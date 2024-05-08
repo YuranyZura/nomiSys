@@ -14,7 +14,7 @@ function App() {
       <Route />
       <Route path="/login" element={<Login />} />
       <Route path="/registerAdmin" element={<RegisterAdmin />} />
-     <Routes/> 
+     </Routes> 
       <div className="bg-red-600">
         <h1>hello</h1>
       </div>
