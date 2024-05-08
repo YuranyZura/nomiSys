@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Button } from "./ui/button";
+//import { Button } from "./ui/button";
+
 function RegisterAdmin() {
   const [nombre, setNombre] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +26,7 @@ function RegisterAdmin() {
           type="password"
           placeholder="*********"
         />
-        <Button
+        <button
           className="bg-red-500"
           id="btn-enviar"
           type="button"
@@ -35,7 +36,7 @@ function RegisterAdmin() {
           }}
         >
           Enviar
-        </Button>
+        </button>
       </form>
     </div>
   );
