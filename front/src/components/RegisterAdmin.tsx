@@ -45,12 +45,6 @@ function RegisterAdmin() {
         type="text"
         placeholder="Documento"
       />
-      <input
-        value={doc}
-        onChange={(event) => setDoc(event.target.value)}
-        type="text"
-        placeholder=""
-      />
     </div>
   );
 }
