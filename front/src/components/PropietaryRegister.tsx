@@ -1,67 +1,61 @@
-import React, { FormEvent, useState } from "react";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-const Signup = () => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [notice, setNotice] = useState("");
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 
-    const signupWithUsernameAndPassword = async (e: FormEvent<HTMLFormElement>) => {
-        alert("User created successfully");
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+})
 
-        e.preventDefault();
+export function SignupPropietary() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  })
 
-        if (password === confirmPassword) {
-            try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                navigate("/");
-                // alert("User created successfully");
-            } catch {
-                setNotice("Sorry, something went wrong. Please try again.");
-            }     
-        } else {
-            setNotice("Passwords don't match. Please try again.");
-        }
-    };
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
+  }
 
-    return(
-        <div className = "container">
-            <div className = "row justify-content-center">
-                <form className = "col-md-4 mt-3 pt-3 pb-3" onSubmit={(e)=> {
-                    e.preventDefault();
-                    signupWithUsernameAndPassword(e);
-                }}>
-                    { "" !== notice &&
-                        <div className = "alert alert-warning" role = "alert">
-                            { notice }    
-                        </div>
-                    }
-                    <div className = "form-floating mb-3">
-                        <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
-                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
-                    </div>
-                    <div className = "form-floating mb-3">
-                        <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = { (e) => setPassword(e.target.value) }></input>
-                        <label htmlFor = "signupPassword" className = "form-label">Password</label>
-                    </div>
-                    <div className = "form-floating mb-3">
-                        <input id = "confirmPassword" type = "password" className = "form-control" placeholder = "Confirm Password" value = { confirmPassword } onChange = { (e) => setConfirmPassword(e.target.value) }></input>
-                        <label htmlFor = "confirmPassword" className = "form-label">Confirm Password</label>
-                    </div>                    
-                    <div className="d-grid">
-                        <button type="submit" className="btn btn-primary pt-3 pb-3">Signup</button>
-                    </div>
-                    <div className = "mt-3 text-center">
-                        <span>Go back to login? <Link to = "/">Click here.</Link></span>
-                    </div>                    
-                </form>
-            </div>
-        </div>
-    )
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="bg-red-800 hover:bg-blue-600 md:bg-green-400">Submit</Button>
+      </form>
+    </Form>
+  )
 }
 
-export default Signup
+
+export default SignupPropietary;
