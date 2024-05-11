@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/form";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,39 +16,39 @@ import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
   username: z.string().min(5, {
-    message: "Username must be at least 5 characters.",
+    message: "El nombre de usuario debe tener al menos 5 caracteres",
   }),
   doc: z
     .string()
     .min(6, {
-      message: "Password must be at least 8 characters.",
+      message: "El documento debe contener al menos 8 caracteres",
     })
     .max(11, {
-      message: "Password must be at least 8 characters.",
+      message: "El documento debe contener maximo 11 caractares",
     }),
   direccion: z
     .string()
     .min(8, {
-      message: "Password must be at least 8 characters.",
+      message: "La direccion debe contener al menos 8 caracteres",
     })
     .optional(),
   telefono: z
     .string()
     .min(8, {
-      message: "Password must be at least 8 characters.",
+      message: "El telefono debe contener al menos 8 caracteres",
     })
     .optional(),
   email: z.string().email({
-    message: "Invalid email.",
+    message: "Correo invalido",
   }),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+    message: "La contraseña debe contener al menos 8 caracteres",
   }),
   passwordConfirmation: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+    message: "La contraseña debe contener al menos 8 caracteres",
   }),
   noCuenta: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+    message: "La cuenta debe contener al menos 8 caracteres",
   }),
 });
 
@@ -75,7 +75,7 @@ export function RegisterAdmin() {
   return (
     <Card className="w-full md:w-1/3 mx-auto md:my-[300px]">
       <CardHeader>
-        <CardTitle>Formulario de registro</CardTitle>
+        <CardTitle>Formulario de registro administrador</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -91,10 +91,10 @@ export function RegisterAdmin() {
                   <FormItem className="w-full md:w-5/12">
                     <FormLabel>Nombre</FormLabel>
                     <FormControl>
-                      <Input placeholder="maria" {...field} />
+                      <Input placeholder="Juan" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Este es tu nombre de usuario.
+                      Este es el nombre de usuario
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -109,12 +109,12 @@ export function RegisterAdmin() {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="maria@gmail.com"
+                        placeholder="juan@gmail.com"
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Este es tu correo electronico.
+                      Este es el correo electronico
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -129,10 +129,10 @@ export function RegisterAdmin() {
                   <FormItem className="w-full md:w-5/12">
                     <FormLabel>Documento</FormLabel>
                     <FormControl>
-                      <Input placeholder="1652213323" {...field} />
+                      <Input placeholder="1001036321" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Este es tu documento de identidad.
+                      Este es el documento de identidad
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -143,11 +143,13 @@ export function RegisterAdmin() {
                 name="telefono"
                 render={({ field }) => (
                   <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Telefono</FormLabel>
+                    <FormLabel>Telefono/celular</FormLabel>
                     <FormControl>
-                      <Input type="tel" placeholder="3434333231" {...field} />
+                      <Input type="tel" placeholder="321564987" {...field} />
                     </FormControl>
-                    <FormDescription>Este es tu telefono.</FormDescription>
+                    <FormDescription>
+                      Este es el telefono o celular
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -178,7 +180,7 @@ export function RegisterAdmin() {
                 name="passwordConfirmation"
                 render={({ field }) => (
                   <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Confirmacion contraseña</FormLabel>
+                    <FormLabel>Confirmación contraseña</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -187,7 +189,7 @@ export function RegisterAdmin() {
                       />
                     </FormControl>
                     <FormDescription>
-                      Este la confirmacion de contraseña.
+                      Esta es la confirmación de contraseña.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -229,9 +231,9 @@ export function RegisterAdmin() {
             </div>
             <Button
               type="submit"
-              className="bg-red-800 hover:bg-blue-600 md:bg-green-400"
+              className="bg-cyan-700 hover:bg-cyan-600 md:bg-cyan-900"
             >
-              Submit
+              Registar
             </Button>
           </form>
         </Form>
