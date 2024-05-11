@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,8 +15,40 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(5, {
+    message: "Username must be at least 5 characters.",
+  }),
+  doc: z
+    .string()
+    .min(6, {
+      message: "Password must be at least 8 characters.",
+    })
+    .max(11, {
+      message: "Password must be at least 8 characters.",
+    }),
+  direccion: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters.",
+    })
+    .optional(),
+  telefono: z
+    .string()
+    .min(8, {
+      message: "Password must be at least 8 characters.",
+    })
+    .optional(),
+  email: z.string().email({
+    message: "Invalid email.",
+  }),
+  password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  passwordConfirmation: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
+  }),
+  noCuenta: z.string().min(8, { 
+    message: "Password must be at least 8 characters.",
   }),
 });
 
@@ -24,7 +57,15 @@ export function SignupPropietary() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      doc: "",
+      direccion: "",
+      telefono: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+      noCuenta: "",
     },
+    mode: "onSubmit",
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -60,5 +101,3 @@ export function SignupPropietary() {
     </Form>
   );
 }
-
-export default SignupPropietary;
