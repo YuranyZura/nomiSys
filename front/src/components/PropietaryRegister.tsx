@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -47,7 +46,7 @@ const formSchema = z.object({
   passwordConfirmation: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-  noCuenta: z.string().min(8, { 
+  noCuenta: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
 });
@@ -101,3 +100,5 @@ export function SignupPropietary() {
     </Form>
   );
 }
+
+export default SignupPropietary;
