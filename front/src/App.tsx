@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import RegisterAdmin from "./components/RegisterAdmin";
-import SignupPropietary from "./components/PropietaryRegister";
+import Authentication from "./views/Authentication";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Route/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/registerAdmin" element={<RegisterAdmin/>}/>
-      <Route path="/registerPropietary" element={<SignupPropietary/>}/>
+      <Route path="/registerPropietary" element={<Authentication/>}/>
       <Route />
       <Route path="/login" element={<Login />} />
       <Route path="/registerAdmin" element={<RegisterAdmin />} />
