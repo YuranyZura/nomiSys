@@ -14,8 +14,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { propietarioSchema } from "@/zod/PropietarioSchema";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { auth } from "@/config/firebase";
+import { FirebaseError } from "firebase/app";
+import { ToastAction } from "./ui/toast";
+import { useToast } from "./ui/use-toast";
+import { signOut } from "firebase/auth";
+import { setDoc, doc as docFirebase } from "firebase/firestore";
+import { db } from "@/config/firebase";
+import { redirect, useNavigate } from "react-router-dom";
 
 export function SignupPropietary() {
+  const { toast } = useToast();
+  const navigation = useNavigate();
   const form = useForm<z.infer<typeof propietarioSchema>>({
     resolver: zodResolver(propietarioSchema),
     defaultValues: {
@@ -31,12 +45,60 @@ export function SignupPropietary() {
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof propietarioSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof propietarioSchema>) => {
+    const { email, password, phone, noCuenta, doc, username } = values;
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const uid = userCredentials.user.uid;
+
+      // Create a reference to the specific document in the "users" collection
+      const docRef = docFirebase(db, "users", uid);
+
+      // Set the document with the user's information
+      const userRegister = await setDoc(docRef, {
+        email,
+        phone,
+        noCuenta,
+        doc,
+        username,
+      });
+
+      navigation("/login");
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user);
+        }
+      });
+      await signOut(auth);
+    } catch (e: FirebaseError & any) {
+      if (e.code === "auth/email-already-in-use") {
+        toast({
+          variant: "destructive",
+          title: "Usuario ya se encuentra registrado.",
+          action: (
+            <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
+          ),
+        });
+      }
+      if (e.code === "auth/invalid-email") {
+        toast({
+          variant: "destructive",
+          title: "Correo invalido.",
+          action: (
+            <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
+          ),
+        });
+      }
+    }
+  };
 
   return (
-    <Card className="w-full md:w-1/3 absolute right-12 top-44 ">
+    <Card className="w-full md:w-[32rem] absolute right-12 top-10 ">
       <CardHeader>
         <CardTitle className="font-bold text-3xl">
           Formulario de registro
@@ -58,9 +120,6 @@ export function SignupPropietary() {
                     <FormControl>
                       <Input placeholder="maria" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Este es tu nombre de usuario.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -78,9 +137,6 @@ export function SignupPropietary() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Este es tu correo electronico.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -96,9 +152,6 @@ export function SignupPropietary() {
                     <FormControl>
                       <Input placeholder="1652213323" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Este es tu documento de identidad.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -112,7 +165,6 @@ export function SignupPropietary() {
                     <FormControl>
                       <Input type="tel" placeholder="3434333231" {...field} />
                     </FormControl>
-                    <FormDescription>Este es tu telefono.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -129,7 +181,6 @@ export function SignupPropietary() {
                     <FormControl>
                       <Input placeholder="CL 99B # 33-22" {...field} />
                     </FormControl>
-                    <FormDescription>Este es tu direccion.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -143,9 +194,6 @@ export function SignupPropietary() {
                     <FormControl>
                       <Input placeholder="232323232" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      Este es tu cuenta bancaria bancolombia.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -165,7 +213,6 @@ export function SignupPropietary() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>Este es tu contraseña.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -183,9 +230,6 @@ export function SignupPropietary() {
                         {...field}
                       />
                     </FormControl>
-                    <FormDescription>
-                      Este la confirmacion de contraseña.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
