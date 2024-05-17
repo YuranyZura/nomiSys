@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,7 +24,7 @@ import { useToast } from "./ui/use-toast";
 import { signOut } from "firebase/auth";
 import { setDoc, doc as docFirebase } from "firebase/firestore";
 import { db } from "@/config/firebase";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function SignupPropietary() {
   const { toast } = useToast();
