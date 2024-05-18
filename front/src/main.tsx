@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import "./App.css";
 import "./config/firebase.ts";
+import './registrar.css'; 
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
