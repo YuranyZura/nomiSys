@@ -47,9 +47,7 @@ const formSchema = z.object({
   passwordConfirmation: z.string().min(8, {
     message: "La contraseña debe contener al menos 8 caracteres",
   }),
-  noCuenta: z.string().min(8, {
-    message: "La cuenta debe contener al menos 8 caracteres",
-  }),
+ 
 });
 
 export function RegisterAdmin() {
@@ -63,7 +61,7 @@ export function RegisterAdmin() {
       email: "",
       password: "",
       passwordConfirmation: "",
-      noCuenta: "",
+    
     },
     mode: "onSubmit",
   });
@@ -208,22 +206,6 @@ export function RegisterAdmin() {
                       <Input placeholder="CL 99B # 33-22" {...field} />
                     </FormControl>
                     <FormDescription>Este es tu direccion.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="noCuenta"
-                render={({ field }) => (
-                  <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Numero de Cuenta Bancaria</FormLabel>
-                    <FormControl>
-                      <Input placeholder="232323232" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Este es tu cuenta bancaria bancolombia.
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
