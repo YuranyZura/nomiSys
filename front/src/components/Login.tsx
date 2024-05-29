@@ -22,7 +22,6 @@ export const Login = () => {
 
   const handleSigninGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
-    navigate("/dashboard");
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
@@ -34,6 +33,7 @@ export const Login = () => {
         ),
       });
     }
+    navigate("/dashboard");
   };
 
   const handleSigninGithub = async () => {
