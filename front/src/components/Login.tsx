@@ -3,7 +3,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GithubAuthProvider,
-  fetchSignInMethodsForEmail,
   signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "@/config/firebase";

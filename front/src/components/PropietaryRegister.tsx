@@ -47,13 +47,13 @@ export function SignupPropietary() {
         const { email, password, phone, noCuenta, doc, username } = values;
         const createdUser = await createUserWithEmailAndPassword(auth, email, password);
         const docRef = docFirebase(db, "users", createdUser.user.uid);
-        const userRegister = await setDoc(docRef, {
-          email,
-          phone,
-          noCuenta,
-          doc,
-          username,
-        });
+       await setDoc(docRef, {
+         email,
+         phone,
+         noCuenta,
+         doc,
+         username,
+       });
      
 
       navigation("/login");
