@@ -3,17 +3,26 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GithubAuthProvider,
+  fetchSignInMethodsForEmail,
+  signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const providers = {
+    google: new GoogleAuthProvider(),
+    github: new GithubAuthProvider(),
+  };
 
   const handleSigninGoogle = async () => {
     const googleProvider = new GoogleAuthProvider();
+    navigate("/dashboard");
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (error: any) {
@@ -31,25 +40,31 @@ export const Login = () => {
     const githubProvider = new GithubAuthProvider();
     try {
       await signInWithPopup(auth, githubProvider);
+      navigate("/dashboard");
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error al iniciar sesion con Github",
-        action: (
-          <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
-        ),
-      });
+      if (error.code === "auth/account-exists-with-different-credential") {
+        const provider = providers.github;
+        signInWithRedirect(auth, provider);
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error al iniciar sesion con Github",
+          action: (
+            <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
+          ),
+        });
+      }
     }
   };
 
   const functioAutenticacion = async (e) => {
     e.preventDefault();
-    console.log("**********PASA POR AQUI**********");
     const correo = e.target.email.value;
     const contraseña = e.target.password.value;
 
     try {
       await signInWithEmailAndPassword(auth, correo, contraseña);
+      navigate("/dashboard")
     } catch (error: any) {
       toast({
         variant: "destructive",
