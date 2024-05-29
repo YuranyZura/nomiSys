@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,22 +13,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { propietarioSchema } from "@/zod/PropietarioSchema";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/config/firebase";
 import { FirebaseError } from "firebase/app";
 import { ToastAction } from "./ui/toast";
 import { useToast } from "./ui/use-toast";
-import { signOut } from "firebase/auth";
 import { setDoc, doc as docFirebase } from "firebase/firestore";
 import { db } from "@/config/firebase";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function SignupPropietary() {
   const { toast } = useToast();
+
   const navigation = useNavigate();
+
   const form = useForm<z.infer<typeof propietarioSchema>>({
     resolver: zodResolver(propietarioSchema),
     defaultValues: {
@@ -46,35 +43,22 @@ export function SignupPropietary() {
   });
 
   const onSubmit = async (values: z.infer<typeof propietarioSchema>) => {
-    const { email, password, phone, noCuenta, doc, username } = values;
     try {
-      const userCredentials = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const uid = userCredentials.user.uid;
-
-      // Create a reference to the specific document in the "users" collection
-      const docRef = docFirebase(db, "users", uid);
-
-      // Set the document with the user's information
-      const userRegister = await setDoc(docRef, {
-        email,
-        phone,
-        noCuenta,
-        doc,
-        username,
-      });
+        const { email, password, phone, noCuenta, doc, username } = values;
+        const createdUser = await createUserWithEmailAndPassword(auth, email, password);
+        const docRef = docFirebase(db, "users", createdUser.user.uid);
+        const userRegister = await setDoc(docRef, {
+          email,
+          phone,
+          noCuenta,
+          doc,
+          username,
+        });
+     
 
       navigation("/login");
 
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log(user);
-        }
-      });
-      await signOut(auth);
+      // await signOut(auth);
     } catch (e: FirebaseError & any) {
       if (e.code === "auth/email-already-in-use") {
         toast({
