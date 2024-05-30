@@ -22,6 +22,14 @@ const Navigation = () => {
           Ver cuenta
         </Link>
       </div>
+      <div className="flex justify-center items-center h-[25vh] my-px-">
+        <Link
+          className="border-2 border-solid border-red-600"
+          to="/dashboard/empresas"
+        >
+          Empresas
+        </Link>
+      </div>
       <nav></nav>
     </header>
   );
