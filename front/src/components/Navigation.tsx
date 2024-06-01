@@ -57,7 +57,7 @@ const Navigation = () => {
           className="text-white mx-auto font-italic"
           onClick={handleSignOut}
         >
-          <GoSignOut size={28} className="mx-auto" />
+          <GoSignOut size={28} className="mx-auto"  />
           Cerrar sesión
         </button>
       </div>{" "}
