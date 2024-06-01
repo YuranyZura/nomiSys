@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <div className="flex gap-2 mr-4">
+    <div className="flex gap-2 mr-4 ">
       <Navigation />
       <Routes>
         <Route path="/" element={<StartDashboard />} />
