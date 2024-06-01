@@ -79,7 +79,7 @@ export const Login = () => {
               <i className="bi bi-instagram"></i>
             </a>
           </div>
-          <span>oscardigital.website</span>
+          <span>registro de Nominas online</span>
         </div>
         <div className="form my-8 ">
           <h2 className="font-bold text-2xl">Iniciar sesion</h2>
