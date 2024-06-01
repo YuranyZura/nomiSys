@@ -10,7 +10,7 @@ import {
 
 const Empresas = () => {
   return (
-    <div className="p-6 w-full  bg-red-600">
+    <div className="p-6 w-full  bg-red-600 ">
       <div className="p-7 bg-yellow-300 flex justify-end">
         <Button type="submit" className="bg-blue-800 hover:bg-blue-500 text-lg">
           Registrar empresa

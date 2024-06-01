@@ -5,12 +5,12 @@ import "./index.css";
 import "./App.css";
 import "./config/firebase.ts";
 import { BrowserRouter } from "react-router-dom";
+import "./styles/estilos.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-     <App />
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );
-

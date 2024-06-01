@@ -3,7 +3,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GithubAuthProvider,
-  fetchSignInMethodsForEmail,
   signInWithRedirect,
 } from "firebase/auth";
 import { auth } from "@/config/firebase";
@@ -64,7 +63,7 @@ export const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, correo, contraseña);
-      navigate("/dashboard")
+      navigate("/dashboard");
     } catch (error: any) {
       toast({
         variant: "destructive",
