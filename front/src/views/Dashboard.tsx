@@ -1,4 +1,5 @@
 import AccountInfo from "@/components/AccountInfo";
+import Empresas from "@/components/Empresas";
 import Navigation from "@/components/Navigation";
 import StartDashboard from "@/components/StartDashboard";
 import { Route, Routes } from "react-router-dom";
@@ -10,6 +11,7 @@ const Dashboard = () => {
       <Routes>
         <Route path="/" element={<StartDashboard />} />
         <Route path="/account" element={<AccountInfo />} />
+        <Route path="/empresas" element={<Empresas />} />
       </Routes>
     </div>
   );
