@@ -2,6 +2,7 @@ import AccountInfo from "@/components/AccountInfo";
 import Empresas from "@/components/Empresas";
 import Navigation from "@/components/Navigation";
 import { Route, Routes } from "react-router-dom";
+import RegistroEmpresa from "@/components/RegistroEmpresa";
 
 const Dashboard = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard = () => {
         <Route path="/" element={<Empresas />} />
         <Route path="/account" element={<AccountInfo />} />
         <Route path="/empresas" element={<Empresas />} />
+        <Route path="/registroempresa" element={<RegistroEmpresa />} />
       </Routes>
     </div>
   );

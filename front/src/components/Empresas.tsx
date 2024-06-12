@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -9,59 +10,74 @@ import {
 } from "@/components/ui/card";
 
 const Empresas = () => {
+  const navigate = useNavigate();
+
+  function handleSubmit() {
+    navigate("/dashboard/RegistroEmpresa");
+  }
+  const empresa = [
+    {
+      name: "Zoomac",
+      description: "Construcción",
+      email: "construccion@gmail.com",
+      RUT: "1258",
+      address: "Apartado CL 98 #12-23",
+      phone: "321987456",
+    },
+    {
+      name: "Inversiones Ahsarch S.A.S. Zomac",
+      description: "Construcción",
+      email: "ahsley3110@gmail.com",
+      RUT: "901299575-5",
+      address: "Chigorodó Urb Montecarlos Manzana B4 #26",
+      phone: "3156987423",
+    },
+    {
+      name: "Solo Maiz",
+      description: "Venta de envueltos de choclo",
+      email: "solomaiz@gmail.com",
+      RUT: "02365",
+      address: "Apartado Calle #3 Bloque",
+      phone: "3225649807",
+    },
+  ];
+
   return (
-    <div className="p-6 w-full  bg-red-600 ">
-      <div className="p-7 bg-yellow-300 flex justify-end">
-        <Button type="submit" className="bg-blue-800 hover:bg-blue-500 text-lg">
+    <div className="p-6 w-full bg-red-600">
+      <div className="p-7 bg-yellow-300 flex justify-end mb-4">
+        <Button
+          onClick={handleSubmit}
+          type="submit"
+          className="bg-blue-800 hover:bg-blue-500 text-lg"
+        >
           Registrar empresa
         </Button>
       </div>
-      <h1>Empresas</h1>
-      <div className="flex space-x-2 bg-black w-1/2 ">
-        <Card>
-          <CardHeader>
-            <CardTitle>Zoomac</CardTitle>
-            <CardDescription>construccion</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>construccion@gmail.com</p>
-            <p>NIT 1258</p>
-            <p>Apartado CL 98 #12-23</p>
-          </CardContent>
-          <CardFooter>
-            <p>tel 321987456</p>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Inversiones ahsarch sas zomac</CardTitle>
-            <CardDescription>construccion</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>ahsley3110@gmail.com</p>
-            <p>NIT 901299575-5</p>
-            <p>chigorodo urb montecarlos manzana B4 #26</p>
-          </CardContent>
-          <CardFooter>
-            <p>tel 3156987423</p>
-          </CardFooter>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>solo maiz</CardTitle>
-            <CardDescription>venta envueltos de choclo</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>solo maiz@gmail.com</p>
-            <p>NIT 02365</p>
-            <p>Apartado calle #3 bloque 1osdjfojsfjsdifjiodsjf</p>
-          </CardContent>
-          <CardFooter>
-            <p>tel 3225649807</p>
-          </CardFooter>
-        </Card>
+      <h1 className="text-3xl text-white mb-4">Empresas</h1>
+      <div className="space- p-4 bg-black w-full flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+          {empresa.map((empresa, index) => (
+            <Card key={index} className="w-full">
+              <CardHeader>
+                <CardTitle>{empresa.name}</CardTitle>
+                <CardDescription>{empresa.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>{empresa.email}</p>
+                <p>NIT {empresa.RUT}</p>
+                <p>{empresa.address}</p>
+                <p>Tel: {empresa.phone}</p>
+              </CardContent>
+              <CardFooter>
+                <div>
+                  <Button className="mt-2 bg-blue-800 hover:bg-blue-500 text-lg">
+                    Ver más
+                  </Button>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
