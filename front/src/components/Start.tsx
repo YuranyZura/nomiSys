@@ -2,10 +2,10 @@ import "boxicons/css/boxicons.min.css";
 
 const Start = () => {
   return (
-    <div className="start">
+    <div>
       <header className="header">
         <a href="#" className="logo">
-          <img src="src/assets/logo.png" className="h-[15vh]" />
+          Logo
         </a>
         <nav className="navbar">
           <a href="#home">Home</a>

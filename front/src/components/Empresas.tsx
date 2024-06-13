@@ -43,8 +43,8 @@ const Empresas = () => {
   ];
 
   return (
-    <div className="p-6 w-full bg-red-600">
-      <div className="p-7 bg-yellow-300 flex justify-end mb-4">
+    <div className="p-6 w-full bg-blue-950">
+      <div className="p-7 flex justify-end mb-4">
         <Button
           onClick={handleSubmit}
           type="submit"
@@ -54,8 +54,8 @@ const Empresas = () => {
         </Button>
       </div>
       <h1 className="text-3xl text-white mb-4">Empresas</h1>
-      <div className="space- p-4 bg-black w-full flex justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+      <div className="space- p-4 bg-blue-950 w-full flex justify-center">
+        <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
           {empresa.map((empresa, index) => (
             <Card key={index} className="w-full">
               <CardHeader>

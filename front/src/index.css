@@ -89,7 +89,7 @@
 }
 
 .auth-bg {
- background-color: #e5e5f7;
-opacity: 0.5;
-background: linear-gradient(135deg, #444cf755 25%, transparent 25%) -7px 0/ 14px 14px, linear-gradient(225deg, #444cf7 25%, transparent 25%) -7px 0/ 14px 14px, linear-gradient(315deg, #444cf755 25%, transparent 25%) 0px 0/ 14px 14px, linear-gradient(45deg, #444cf7 25%, #e5e5f7 25%) 0px 0/ 14px 14px;
+  background-image: url("https://images.unsplash.com/photo-1538947151057-dfe933d688d1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  opacity: 0.5;
 }
+
