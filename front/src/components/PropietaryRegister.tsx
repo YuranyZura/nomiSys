@@ -36,25 +36,25 @@ export function SignupPropietary() {
       phone: "",
       email: "",
       password: "",
-      confirmPassword: "",
-      noCuenta: "",
     },
     mode: "onSubmit",
   });
 
   const onSubmit = async (values: z.infer<typeof propietarioSchema>) => {
     try {
-        const { email, password, phone, noCuenta, doc, username } = values;
-        const createdUser = await createUserWithEmailAndPassword(auth, email, password);
-        const docRef = docFirebase(db, "users", createdUser.user.uid);
-        const userRegister = await setDoc(docRef, {
-          email,
-          phone,
-          noCuenta,
-          doc,
-          username,
-        });
-     
+      const { email, password, phone, doc, username } = values;
+      const createdUser = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const docRef = docFirebase(db, "users", createdUser.user.uid);
+      const userRegister = await setDoc(docRef, {
+        email,
+        phone,
+        doc,
+        username,
+      });
 
       navigation("/login");
 
@@ -171,42 +171,10 @@ export function SignupPropietary() {
               />
               <FormField
                 control={form.control}
-                name="noCuenta"
-                render={({ field }) => (
-                  <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Numero de Cuenta Bancaria</FormLabel>
-                    <FormControl>
-                      <Input placeholder="232323232" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex flex-col justify-between md:flex-row ">
-              <FormField
-                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem className="w-full md:w-5/12">
                     <FormLabel>Contraseña</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="************************"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem className="w-full md:w-5/12">
-                    <FormLabel>Confirmacion contraseña</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
