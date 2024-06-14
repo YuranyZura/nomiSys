@@ -1,3 +1,5 @@
+import RegisterEmploye from "@/components/RegisterEmploye";
+import Assign from "@/components/Assign";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import RegisterAdmin from "./components/RegisterAdmin";
@@ -16,6 +18,9 @@ function App() {
         <Route path="/signup" element={<Authentication />} />
         <Route path="/registerAdmin" element={<RegisterAdmin />} />
         <Route path="registerSuper" element={<RegisterSuper />} />
+        <Route path="/registerAdmin" element={<RegisterAdmin />} />
+        <Route path="/registerEmploye" element={<RegisterEmploye />} />
+        <Route path="/assign" element={<Assign />} />
         <Route
           path="/dashboard/*"
           element={
