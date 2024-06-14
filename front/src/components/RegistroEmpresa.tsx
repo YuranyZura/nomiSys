@@ -15,6 +15,10 @@ import { Input } from "@/components/ui/input";
 import { saveEmpresa } from "@/service/empresa";
 import { useToast } from "./ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { getUserByEmail } from "@/service/user";
+import { auth } from "@/config/firebase";
+import { useEffect, useState } from "react";
+import { useStore } from "@/store/user";
 
 const formSchema = z.object({
   nombreEmpresa: z.string().min(5, {
@@ -41,6 +45,8 @@ export function RegistroEmpresa() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const user = useStore((state: any) => state.user);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,7 +61,7 @@ export function RegistroEmpresa() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    saveEmpresa(values);
+    saveEmpresa({ ...values, userDoc: user.doc });
     toast({
       variant: "default",
       title: "Empresa registrada exitosamente",
