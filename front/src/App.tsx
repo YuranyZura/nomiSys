@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Start from "./components/Start";
-
+import RegisterSuper from "@/components/RegisterSuper";
 function App() {
   return (
     <div>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Authentication />} />
         <Route path="/registerAdmin" element={<RegisterAdmin />} />
-
+        <Route path="registerSuper" element={<RegisterSuper />} />
         <Route
           path="/dashboard/*"
           element={

@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { saveEmpresa } from "@/service/empresa";
 
 const formSchema = z.object({
   nombreEmpresa: z.string().min(5, {
@@ -35,8 +34,8 @@ const formSchema = z.object({
   }),
 });
 
-export function RegistroEmpresa() {
-  const form = useForm<z.infer<typeof formSchema>>({
+export function RegistroEmpresa({ addEmpresa }) {
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nombreEmpresa: "",
@@ -49,8 +48,15 @@ export function RegistroEmpresa() {
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    saveEmpresa(values);
+  function onSubmit(values) {
+    addEmpresa({
+      name: values.nombreEmpresa,
+      description: values.descripcionEmpresa,
+      email: values.correo,
+      RUT: values.rut,
+      address: values.direccion,
+      phone: values.telefono,
+    });
   }
 
   return (

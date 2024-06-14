@@ -44,7 +44,7 @@ const Empresas = () => {
 
   return (
     <div className="p-6 w-full bg-blue-950">
-      <div className="p-7 flex justify-end mb-4">
+      <div className="p-7 flex justify-end mb-4 space-x-5">
         <Button
           onClick={handleSubmit}
           type="submit"
@@ -52,6 +52,12 @@ const Empresas = () => {
         >
           Registrar empresa
         </Button>
+        <a
+          className="bg-blue-800 hover:bg-blue-500 text-lg"
+          href="/RegisterSuper"
+        >
+          Registro Supervisor
+        </a>
       </div>
       <h1 className="text-3xl text-white mb-4">Empresas</h1>
       <div className="space- p-4 bg-blue-950 w-full flex justify-center">
