@@ -8,6 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { MdEmail } from "react-icons/md";
+import { FaBarcode } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaPhoneAlt } from "react-icons/fa";
 
 const Empresas = () => {
   const navigate = useNavigate();
@@ -43,40 +47,48 @@ const Empresas = () => {
   ];
 
   return (
-    <div className="p-6 w-full bg-blue-950">
-      <div className="p-7 flex justify-end mb-4 space-x-5">
+    <div className="p-6 w-full ">
+      <div className="p-7 flex justify-end mb-4">
         <Button
           onClick={handleSubmit}
           type="submit"
-          className="bg-blue-800 hover:bg-blue-500 text-lg"
+          className="bg-blue-800 text-5xl h-10 w-10 hover:bg-blue-500  rounded-full"
         >
-          Registrar empresa
+          +
         </Button>
-        <a
-          className="bg-blue-800 hover:bg-blue-500 text-lg"
-          href="/RegisterSuper"
-        >
-          Registro Supervisor
-        </a>
       </div>
-      <h1 className="text-3xl text-white mb-4">Empresas</h1>
-      <div className="space- p-4 bg-blue-950 w-full flex justify-center">
+      <h1 className="text-3xl text-white mb-4 font-bold -mt-20">
+        Mis empresas
+      </h1>
+      <div className="space- p-4  w-full flex justify-center">
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
           {empresa.map((empresa, index) => (
-            <Card key={index} className="w-full">
+            <Card key={index} className="w-full flex flex-col justify-between">
               <CardHeader>
                 <CardTitle>{empresa.name}</CardTitle>
                 <CardDescription>{empresa.description}</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p>{empresa.email}</p>
-                <p>NIT {empresa.RUT}</p>
-                <p>{empresa.address}</p>
-                <p>Tel: {empresa.phone}</p>
+              <CardContent className="flex flex-col gap-2">
+                <div className="flex space-x-2">
+                  <MdEmail size={25} className="text-sky-500" />
+                  <p>{empresa.email}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <FaBarcode size={25} className="text-sky-500" />
+                  <p>{empresa.RUT}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <FaLocationDot size={25} className="text-sky-500" />
+                  <p>{empresa.address}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <FaPhoneAlt size={20} className="text-sky-500" />
+                  <p>{empresa.phone}</p>
+                </div>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="mx-auto">
                 <div>
-                  <Button className="mt-2 bg-blue-800 hover:bg-blue-500 text-lg">
+                  <Button className="mt-2  bg-slate-800 hover:bg-blue-500 text-lg">
                     Ver más
                   </Button>
                 </div>

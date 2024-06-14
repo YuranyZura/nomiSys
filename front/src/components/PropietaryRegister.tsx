@@ -41,6 +41,7 @@ export function SignupPropietary() {
   });
 
   const onSubmit = async (values: z.infer<typeof propietarioSchema>) => {
+    console.log("***************PASA POR AQUI***************");
     try {
       const { email, password, phone, doc, username } = values;
       const createdUser = await createUserWithEmailAndPassword(
@@ -54,6 +55,7 @@ export function SignupPropietary() {
         phone,
         doc,
         username,
+        role: "PROPIETARY",
       });
 
       navigation("/login");
@@ -82,7 +84,7 @@ export function SignupPropietary() {
   };
 
   return (
-    <Card className="w-full md:w-[32rem] absolute right-12 top-10 ">
+    <Card className="w-full md:w-[28rem] absolute right-12 top-20 ">
       <CardHeader>
         <CardTitle className="font-bold text-3xl">
           Formulario de registro
@@ -187,6 +189,7 @@ export function SignupPropietary() {
                 )}
               />
             </div>
+
             <div className="flex justify-center">
               <Button
                 type="submit"
