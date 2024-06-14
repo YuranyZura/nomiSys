@@ -28,7 +28,7 @@ const Start = () => {
           </p>
           <div className="btn-box">
             <a href="/login">Login</a>
-            <a href="/signup">Sign In</a>
+            <a href="/signup">Check In</a>
           </div>
         </div>
         <div className="home-imagen">
