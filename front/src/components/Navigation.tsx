@@ -40,11 +40,9 @@ const Navigation = () => {
           className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
           to="/dashboard/empresas"
         >
-          
           <BsBuildingsFill className="mx-auto text-white" size={25} />
           Empresas
         </Link>
-        <a href="/RegisterEmploye">Agregar Empleados</a>
         <Link
           className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
           to="/dashboard/nomina"
@@ -52,7 +50,6 @@ const Navigation = () => {
           <BsReceiptCutoff className="mx-auto text-white" size={25} />
           Nomina
         </Link>
-        <a href="/Assign">Asignar Tareas</a>
       </div>
       <nav></nav>
       <div className="absolute bottom-0 mb-2 w-full flex justify-center">

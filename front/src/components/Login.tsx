@@ -93,7 +93,6 @@ export const Login = () => {
               <i className="bi bi-instagram"></i>
             </a>
           </div>
-          <span>oscardigital.website</span>
         </div>
         <div className="form my-8 ">
           <h2 className="font-bold text-2xl">Iniciar sesion</h2>
@@ -102,7 +101,7 @@ export const Login = () => {
               <input
                 type="text"
                 placeholder="Ingrese email"
-                className="rounded-md h-8 bg-red-500 mt"
+                className="rounded-md h-8 bg-red-500 mt text-white"
                 name="email"
               />
               <input
@@ -111,12 +110,11 @@ export const Login = () => {
                 className="cajacontraseña h-8 rounded-md mt-2 "
                 name="password"
               />
-              <button className="btnform mt-4 " type="submit">
+              <button className="btnform mt-4" type="submit">
                 Iniciar sesion
               </button>
             </form>
           </div>
-
           <div>
             <button className="flex items-center justify-center py-2 px-10 bg-white hover:bg-gray-200 focus:ring-blue-500 focus:ring-offset-blue-200 text-gray-700  transition ease-in duration-200 text-center  font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg text-sm h-8 w-64 mx-auto">
               <svg
@@ -205,10 +203,10 @@ export const Login = () => {
             <div className="flex items-center justify-between mt-4">
               <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
               <Link
-                className="text-xs text-gray-500 uppercase dark:text-gray-400 hover:underline"
+                className="text-xs text-black-500 uppercase dark:text-gray-400 hover:underline"
                 to="/signup"
               >
-                o registrarse
+                registrarse
               </Link>
               <span className="w-1/5 border-b dark:border-gray-400 md:w-1/4"></span>
             </div>
