@@ -8,6 +8,7 @@ import { useStore } from "@/store/user";
 import { useEffect } from "react";
 import { auth } from "@/config/firebase";
 import { getUserByEmail } from "@/service/user";
+import Empresa from "@/components/Empresa";
 
 const Dashboard = () => {
   const setUser = useStore((state: any) => state.setUser);
@@ -31,6 +32,7 @@ const Dashboard = () => {
         <Route path="/empresas" element={<Empresas />} />
         <Route path="/registroempresa" element={<RegistroEmpresa />} />
         <Route path="/registersuper" element={<RegisterSuper />} />
+        <Route path="/empresas/:id" element={<Empresa />} />
       </Routes>
     </div>
   );

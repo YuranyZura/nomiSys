@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -33,7 +33,6 @@ const Empresas = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
       setUserAuth(user);
       if (user) {
-        // Ahora fetchEmpresas se llama después de que setUserAuth se ha llamado
         const empresasDB = await getEmpresasUser(user.email);
         setEmpresas(empresasDB);
       }
@@ -72,7 +71,7 @@ const Empresas = () => {
       </h1>
       <div className="space- p-4  w-full flex justify-center">
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl mx-auto">
-          {empresasData.length > 0 &&
+          {empresasData.length > 0 ? (
             empresasData.map((empresa, index) => (
               <Card
                 key={index}
@@ -83,7 +82,6 @@ const Empresas = () => {
                   <CardDescription>
                     {empresa.descripcionEmpresa}
                   </CardDescription>
-                  {console.log(empresa)}
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
                   <div className="flex space-x-2">
@@ -105,13 +103,19 @@ const Empresas = () => {
                 </CardContent>
                 <CardFooter className="mx-auto">
                   <div>
-                    <Button className="mt-2  bg-slate-800 hover:bg-blue-500 text-lg">
+                    <Link
+                      to={`/dashboard/empresas/${empresa.id}`}
+                      className="mt-2  p-2 rounded-md text-white hover:text-black bg-slate-800 hover:bg-blue-500 text-lg"
+                    >
                       Ver más
-                    </Button>
+                    </Link>
                   </div>
                 </CardFooter>
               </Card>
-            ))}
+            ))
+          ) : (
+            <p>No hay empresas registradas</p>
+          )}
         </div>
       </div>
     </div>
