@@ -6,13 +6,19 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { v4 as uuid } from "uuid";
+import { db } from "@/config/firebase";
+import { setDoc, doc as docFirebase } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { FirebaseError } from "firebase/app";
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 
 const formSchema = z.object({
   nombreCompleto: z.string().nonempty({
@@ -41,7 +47,9 @@ const formSchema = z.object({
   }),
 });
 
-export function RegisterEmploye() {
+export function RegisterEmployee() {
+  const navigation = useNavigate();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,12 +65,58 @@ export function RegisterEmploye() {
     mode: "onSubmit",
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+ async function onSubmit(values: z.infer<typeof formSchema>) {
+    const id = uuid();
+
+    try {
+      const {
+        email,
+        fechaInicio,
+        fechaNacimiento,
+        dni,
+        puestoTrabajo,
+        telefonoMovil,
+        salarioInicial,
+      } = values;
+
+      const docRef = docFirebase(db, "employees", id);
+      const userRegister = await setDoc(docRef, {
+        email,
+        fechaInicio,
+        fechaNacimiento,
+        dni,
+        puestoTrabajo,
+        telefonoMovil,
+        salarioInicial,
+      });
+
+      navigation("/login");
+
+      // await signOut(auth);
+    } catch (e: FirebaseError & any) {
+      if (e.code === "auth/email-already-in-use") {
+        toast({
+          variant: "destructive",
+          title: "Usuario ya se encuentra registrado.",
+          action: (
+            <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
+          ),
+        });
+      }
+      if (e.code === "auth/invalid-email") {
+        toast({
+          variant: "destructive",
+          title: "Correo invalido.",
+          action: (
+            <ToastAction altText="Probar de nuevo">Probar de nuevo</ToastAction>
+          ),
+        });
+      }
+    }
   }
 
   return (
-    <div className="flex justify-center items-center h-screen w-1/2 bg-red-500">
+    <div className="flex justify-center items-center h-screen w-1/2 ">
       <Card className="max-w-screen-md">
         <CardHeader>
           <CardTitle>Formulario de Registro de Empleados</CardTitle>
@@ -102,7 +156,9 @@ export function RegisterEmploye() {
                   name="dni"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Número de identificación (DNI/Pasaporte)</FormLabel>
+                      <FormLabel>
+                        Número de identificación (DNI/Pasaporte)
+                      </FormLabel>
                       <FormControl>
                         <Input placeholder="12345678" {...field} />
                       </FormControl>
@@ -117,7 +173,11 @@ export function RegisterEmploye() {
                     <FormItem>
                       <FormLabel>Correo electrónico</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="example@example.com" {...field} />
+                        <Input
+                          type="email"
+                          placeholder="example@example.com"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -177,10 +237,12 @@ export function RegisterEmploye() {
                     </FormItem>
                   )}
                 />
-                
               </div>
             </div>
-            <Button type="submit" className="w-full mt-4 bg-cyan-700 hover:bg-cyan-600">
+            <Button
+              type="submit"
+              className="w-full mt-4 bg-cyan-700 hover:bg-cyan-600"
+            >
               Registrar
             </Button>
           </Form>
@@ -188,7 +250,6 @@ export function RegisterEmploye() {
       </Card>
     </div>
   );
-  
 }
 
-export default RegisterEmploye;
+export default RegisterEmployee;

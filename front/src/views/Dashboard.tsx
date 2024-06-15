@@ -3,12 +3,13 @@ import Empresas from "@/components/Empresas";
 import Navigation from "@/components/Navigation";
 import { Route, Routes } from "react-router-dom";
 import RegistroEmpresa from "@/components/RegistroEmpresa";
-import RegisterSuper from "@/components/RegisterSuper";
+import RegisterSupervisor from "@/components/RegisterSupervisor";
 import { useStore } from "@/store/user";
 import { useEffect } from "react";
 import { auth } from "@/config/firebase";
 import { getUserByEmail } from "@/service/user";
 import Empresa from "@/components/Empresa";
+import RegisterEmployee from "@/components/RegisterEmploye";
 
 const Dashboard = () => {
   const setUser = useStore((state: any) => state.setUser);
@@ -31,8 +32,9 @@ const Dashboard = () => {
         <Route path="/account" element={<AccountInfo />} />
         <Route path="/empresas" element={<Empresas />} />
         <Route path="/registroempresa" element={<RegistroEmpresa />} />
-        <Route path="/registersuper" element={<RegisterSuper />} />
+        <Route path="/register_supervisor" element={<RegisterSupervisor />} />
         <Route path="/empresas/:id" element={<Empresa />} />
+        <Route path="/register_empleado" element={<RegisterEmployee />} />
       </Routes>
     </div>
   );
