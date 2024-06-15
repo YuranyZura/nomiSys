@@ -14,6 +14,7 @@ import RegisterEmployee from "@/components/RegisterEmploye";
 const Dashboard = () => {
   const setUser = useStore((state: any) => state.setUser);
   const user = auth.currentUser;
+  
 
   useEffect(() => {
     const fetchUser = async () => {
