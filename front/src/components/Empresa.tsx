@@ -14,6 +14,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { HiIdentification } from "react-icons/hi";
 import { FaCreditCard } from "react-icons/fa6";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import {
   Table,
@@ -69,6 +70,24 @@ const invoices = [
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
   },
+  {
+    invoice: "INV007",
+    paymentStatus: "Unpaid",
+    totalAmount: "$300.00",
+    paymentMethod: "Credit Card",
+  },
+  {
+    invoice: "INV007",
+    paymentStatus: "Unpaid",
+    totalAmount: "$300.00",
+    paymentMethod: "Credit Card",
+  },
+  {
+    invoice: "INV007",
+    paymentStatus: "Unpaid",
+    totalAmount: "$300.00",
+    paymentMethod: "Credit Card",
+  },
 ];
 
 const Empresa = () => {
@@ -76,7 +95,7 @@ const Empresa = () => {
   const empresas = useStore((state: any) => state.empresas);
   const empresa = empresas.find((empresa: any) => empresa.id === id);
   return (
-    <div className="w-full ">
+    <div className="w-full max-h-screen overflow-hidden">
       {empresa ? (
         <div className="flex flex-col space-y-4">
           <h1 className="bg-gradient-to-r text-4xl font-bold from-slate-700 to-slate-400 rounded-md mt-2 px-2 py-1 flex items-end justify-between">
@@ -149,38 +168,60 @@ const Empresa = () => {
               </CardContent>
             </Card>
           </div>
-          <div>
-            <Table className="w-8/12">
-              <TableCaption>A list of your recent invoices.</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Invoice</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((invoice) => (
-                  <TableRow key={invoice.invoice}>
-                    <TableCell className="font-medium">
-                      {invoice.invoice}
-                    </TableCell>
-                    <TableCell>{invoice.paymentStatus}</TableCell>
-                    <TableCell>{invoice.paymentMethod}</TableCell>
-                    <TableCell className="text-right">
-                      {invoice.totalAmount}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-right">$2,500.00</TableCell>
-                </TableRow>
-              </TableFooter>
-            </Table>
+          <div className=" flex w-full gap-4">
+            <div className="w-8/12">
+              <Table className="w-4/12 m-0">
+                <ul className="flex justify-between px-2 py-2 bg-slate-600 rounded-md w-[500px] mb-1">
+                  <li className="font-medium">Invoice</li>
+                  <li className="font-medium">Payment Status</li>
+                  <li className="font-medium">Payment Method</li>
+                  <li className="font-medium text-right">Total Amount</li>
+                </ul>
+                <ScrollArea className="h-72 w-[500px] p-0 m-0 rounded-md border flex-grow">
+                  <TableBody className="w-full">
+                    {invoices.map((invoice) => (
+                      <TableRow key={invoice.invoice}>
+                        <TableCell className="font-medium">
+                          {invoice.invoice}
+                        </TableCell>
+                        <TableCell>{invoice.paymentStatus}</TableCell>
+                        <TableCell>{invoice.paymentMethod}</TableCell>
+                        <TableCell className="text-right">
+                          {invoice.totalAmount}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </ScrollArea>
+              </Table>
+            </div>
+
+            <div className="w-full">
+              <Table className="w-full">
+                <ul className="flex justify-between px-2 py-2 bg-slate-600 rounded-md w-full mb-1">
+                  <li className="font-medium">Invoice</li>
+                  <li className="font-medium">Payment Status</li>
+                  <li className="font-medium">Payment Method</li>
+                  <li className="font-medium text-right">Total Amount</li>
+                </ul>
+                <ScrollArea className="h-72 w-full p-0 m-0 rounded-md border flex-grow">
+                  <TableBody className="w-full">
+                    {invoices.map((invoice) => (
+                      <TableRow key={invoice.invoice}>
+                        <TableCell className="font-medium">
+                          {invoice.invoice}
+                        </TableCell>
+                        <TableCell>{invoice.paymentStatus}</TableCell>
+                        <TableCell>{invoice.paymentMethod}</TableCell>
+                        <TableCell className="text-right">
+                          {invoice.totalAmount}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </ScrollArea>
+              </Table>
+            </div>
           </div>
         </div>
       ) : (
