@@ -13,16 +13,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { auth, db } from "@/config/firebase";
+import { auth, db, firebaseConfig, secondaryAuth } from "@/config/firebase";
 import { setDoc, doc as docFirebase } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import { FirebaseError } from "firebase/app";
+import { useNavigate, useParams } from "react-router-dom";
+import { FirebaseError, getApp, getApps, initializeApp } from "firebase/app";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signOut,
+} from "firebase/auth";
 import { supervisorSchema } from "@/zod/SupervisorSchema";
 
 export function RegisterSupervisor() {
+  const { id } = useParams();
   const form = useForm<z.infer<typeof supervisorSchema>>({
     resolver: zodResolver(supervisorSchema),
     defaultValues: {
@@ -40,12 +45,13 @@ export function RegisterSupervisor() {
   const navigation = useNavigate();
   const { toast } = useToast();
 
+ 
   async function onSubmit(values: z.infer<typeof supervisorSchema>) {
     try {
       const { username, doc, direccion, phone, email, password, noCuenta } =
         values;
       const createdUser = await createUserWithEmailAndPassword(
-        auth,
+        secondaryAuth,
         email,
         password
       );
@@ -56,14 +62,14 @@ export function RegisterSupervisor() {
         direccion,
         phone,
         email,
-        password,
         noCuenta,
         role: "SUPERVISOR",
+        empresa: id,
       });
 
       navigation("/dashboard");
 
-      // await signOut(auth);
+      await signOut(secondaryAuth);
     } catch (e: FirebaseError & any) {
       if (e.code === "auth/email-already-in-use") {
         toast({

@@ -31,7 +31,10 @@ const Dashboard = () => {
         <Route path="/account" element={<AccountInfo />} />
         <Route path="/empresas" element={<Empresas />} />
         <Route path="/registroempresa" element={<RegistroEmpresa />} />
-        <Route path="/register_supervisor" element={<RegisterSupervisor />} />
+        <Route
+          path="/register_supervisor/:id"
+          element={<RegisterSupervisor />}
+        />
         <Route path="/empresas/:id" element={<Empresa />} />
         <Route path="/register_empleado" element={<RegisterEmployee />} />
       </Routes>

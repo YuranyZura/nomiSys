@@ -103,7 +103,7 @@ const Empresa = () => {
               <a className="text-4xl">{empresa.nombreEmpresa} </a>|{" "}
               {empresa.descripcionEmpresa}
             </p>
-            <Link to="/dashboard/register_supervisor">
+            <Link to={`/dashboard/register_supervisor/${empresa.id}`}>
               <button className="bg-sky-500 text-white px-2 py-1 text-lg rounded-md ml-2">
                 Registrar supervisor
               </button>
