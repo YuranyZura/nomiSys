@@ -17,6 +17,7 @@ import { getEmpresasUser } from "@/service/empresa";
 import { useStore } from "@/store/user";
 import { auth } from "@/config/firebase";
 import { syncBuiltinESMExports } from "module";
+import { getUserByEmail } from "@/service/user";
 
 const Empresas = () => {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ const Empresas = () => {
   const empresas = useStore((state: any) => state.empresas);
   const setEmpresas = useStore((state: any) => state.setEmpresas);
   const [userAuth, setUserAuth] = useState<any>(null);
+  const [userDB, setUserDB] = useState<any>(null);
+  const user = auth.currentUser;
 
   function handleSubmit() {
     navigate("/dashboard/RegistroEmpresa");
@@ -55,16 +58,27 @@ const Empresas = () => {
     setEmpresas(empresasDB);
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userDBFirebase = await getUserByEmail(user?.email ?? "");
+      const convertedUserDB = userDBFirebase;
+      setUserDB(convertedUserDB);
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="p-6 w-full ">
       <div className="p-7 flex justify-end mb-4">
-        <Button
-          onClick={handleSubmit}
-          type="submit"
-          className="bg-blue-800 text-5xl h-10 w-10 hover:bg-blue-500  rounded-full"
-        >
-          +
-        </Button>
+        {userDB !== null && userDB.role === "PROPIETARY" && (
+          <Button
+            onClick={handleSubmit}
+            type="submit"
+            className="bg-blue-800 text-5xl h-10 w-10 hover:bg-blue-500  rounded-full"
+          >
+            +
+          </Button>
+        )}
       </div>
       <h1 className="text-3xl text-white mb-4 font-bold -mt-20">
         Mis empresas

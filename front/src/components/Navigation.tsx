@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
 import { BsBuildingsFill, BsReceiptCutoff } from "react-icons/bs";
+import { IoIosPerson } from "react-icons/io";
 import { getUserByEmail } from "@/service/user";
 
 const Navigation = () => {
@@ -48,13 +49,24 @@ const Navigation = () => {
         </Link>
       </div>
       <div className="flex justify-center items-center flex-col text-white">
-        <Link
-          className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
-          to="/dashboard/empresas"
-        >
-          <BsBuildingsFill className="mx-auto text-white" size={25} />
-          Empresas
-        </Link>
+        {userDB?.role !== "SUPERVISOR" && (
+          <Link
+            className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
+            to="/dashboard/empresas"
+          >
+            <BsBuildingsFill className="mx-auto text-white" size={25} />
+            Empresas
+          </Link>
+        )}
+        {userDB !== null && userDB.role === "SUPERVISOR" && (
+          <Link
+            className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500 "
+            to="/dashboard/supervisor"
+          >
+            <IoIosPerson className="mx-auto text-white" size={25} />
+            Supervisor
+          </Link>
+        )}
         <Link
           className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
           to="/dashboard/nomina"
@@ -62,15 +74,6 @@ const Navigation = () => {
           <BsReceiptCutoff className="mx-auto text-white" size={25} />
           Nomina
         </Link>
-        {userDB !== null && userDB.role === "SUPERVISOR" && (
-          <Link
-            className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
-            to="/dashboard/supervisor"
-          >
-            <BsReceiptCutoff className="mx-auto text-white" size={25} />
-            Supervisor
-          </Link>
-        )}
       </div>
       <nav></nav>
       <div className="absolute bottom-0 mb-2 w-full flex justify-center">
