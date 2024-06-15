@@ -34,7 +34,7 @@ const AccountInfo = () => {
     console.log(userDB);
   };
   return (
-    <div className="min-w-96 w-full my-2 flex items-center bg-gray-100 rounded-md">
+    <div className="min-w-96 w-full my-2 flex items-center">
       <div className="w-5/12 bg-sky-600 mx-auto rounded-md p-4  text-white space-y-2">
         <img
           src={user?.photoURL ?? ""}

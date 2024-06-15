@@ -20,55 +20,16 @@ import { FirebaseError } from "firebase/app";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
-const formSchema = z.object({
-  username: z.string().min(5, {
-    message: "El nombre de usuario debe tener al menos 5 caracteres",
-  }),
-  doc: z
-    .string()
-    .min(6, {
-      message: "El documento debe contener al menos 8 caracteres",
-    })
-    .max(11, {
-      message: "El documento debe contener maximo 11 caractares",
-    }),
-  direccion: z
-    .string()
-    .min(8, {
-      message: "La direccion debe contener al menos 8 caracteres",
-    })
-    .optional(),
-  telefono: z
-    .string()
-    .min(8, {
-      message: "El telefono debe contener al menos 8 caracteres",
-    })
-    .optional(),
-  email: z.string().email({
-    message: "Correo invalido",
-  }),
-  password: z.string().min(8, {
-    message: "La contraseña debe contener al menos 8 caracteres",
-  }),
-  passwordConfirmation: z.string().min(8, {
-    message: "La contraseña debe contener al menos 8 caracteres",
-  }),
-  noCuenta: z.string().min(8, {
-    message: "La cuenta debe contener al menos 8 caracteres",
-  }),
-});
+import { supervisorSchema } from "@/zod/SupervisorSchema";
 
 export function RegisterSupervisor() {
-  const navigation = useNavigate();
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof supervisorSchema>>({
+    resolver: zodResolver(supervisorSchema),
     defaultValues: {
       username: "",
       doc: "",
       direccion: "",
-      telefono: "",
+      phone: "",
       email: "",
       password: "",
       passwordConfirmation: "",
@@ -76,10 +37,12 @@ export function RegisterSupervisor() {
     },
     mode: "onSubmit",
   });
+  const navigation = useNavigate();
+  const { toast } = useToast();
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof supervisorSchema>) {
     try {
-      const { username, doc, direccion, telefono, email, password, noCuenta } =
+      const { username, doc, direccion, phone, email, password, noCuenta } =
         values;
       const createdUser = await createUserWithEmailAndPassword(
         auth,
@@ -91,14 +54,14 @@ export function RegisterSupervisor() {
         username,
         doc,
         direccion,
-        telefono,
+        phone,
         email,
         password,
         noCuenta,
         role: "SUPERVISOR",
       });
 
-      navigation("/login");
+      navigation("/dashboard");
 
       // await signOut(auth);
     } catch (e: FirebaseError & any) {
@@ -192,7 +155,7 @@ export function RegisterSupervisor() {
               <div className="flex flex-col justify-between md:flex-row space-x-2">
                 <FormField
                   control={form.control}
-                  name="telefono"
+                  name="phone"
                   render={({ field }) => (
                     <FormItem className="w-full md:w-5/12">
                       <FormLabel>Telefono/celular</FormLabel>
@@ -241,7 +204,7 @@ export function RegisterSupervisor() {
               <div className="flex flex-col justify-between md:flex-row items-center">
                 <FormField
                   control={form.control}
-                  name="passwordConfirmation"
+                  name="password"
                   render={({ field }) => (
                     <FormItem className="w-full md:w-5/12">
                       <FormLabel>Confirmación contraseña</FormLabel>
@@ -253,9 +216,7 @@ export function RegisterSupervisor() {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
-                        Esta es la confirmación de contraseña.
-                      </FormDescription>
+                      <FormDescription>Esta es la contraseña.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
