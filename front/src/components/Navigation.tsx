@@ -1,17 +1,29 @@
 import { auth } from "@/config/firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoSignOut } from "react-icons/go";
 import { BsBuildingsFill, BsReceiptCutoff } from "react-icons/bs";
+import { getUserByEmail } from "@/service/user";
 
 const Navigation = () => {
-  const [user, setUser] = useState(auth.currentUser);
+  const [userDB, setUserDB] = useState<any>(null);
   const navigate = useNavigate();
+
+  const user = auth.currentUser;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userDBFirebase = await getUserByEmail(user?.email ?? "");
+      const convertedUserDB = userDBFirebase;
+      setUserDB(convertedUserDB);
+    };
+    fetchUser();
+  }, []);
 
   const handleSignOut = async () => {
     try {
       await auth.signOut();
-      setUser(null);
+      setUserDB(null);
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -50,6 +62,15 @@ const Navigation = () => {
           <BsReceiptCutoff className="mx-auto text-white" size={25} />
           Nomina
         </Link>
+        {userDB !== null && userDB.role === "SUPERVISOR" && (
+          <Link
+            className="border-y-2 border-solid border-blue-950 w-full text-center py-2 hover:bg-blue-500"
+            to="/dashboard/supervisor"
+          >
+            <BsReceiptCutoff className="mx-auto text-white" size={25} />
+            Supervisor
+          </Link>
+        )}
       </div>
       <nav></nav>
       <div className="absolute bottom-0 mb-2 w-full flex justify-center">
@@ -57,10 +78,10 @@ const Navigation = () => {
           className="text-white mx-auto font-italic"
           onClick={handleSignOut}
         >
-          <GoSignOut size={28} className="mx-auto"  />
+          <GoSignOut size={28} className="mx-auto" />
           Cerrar sesión
         </button>
-      </div>{" "}
+      </div>
     </header>
   );
 };
