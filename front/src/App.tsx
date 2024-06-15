@@ -2,13 +2,12 @@ import RegisterEmploye from "@/components/RegisterEmploye";
 import Assign from "@/components/Assign";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
-import RegisterAdmin from "./components/RegisterAdmin";
 import Authentication from "./views/Authentication";
 import { Toaster } from "@/components/ui/toaster";
 import Dashboard from "./views/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Start from "./components/Start";
-import RegisterSuper from "@/components/RegisterSuper";
+import RegisterSuper from "@/components/RegisterSupervisor";
 function App() {
   return (
     <div>
@@ -16,9 +15,7 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Authentication />} />
-        <Route path="/registerAdmin" element={<RegisterAdmin />} />
         <Route path="registerSuper" element={<RegisterSuper />} />
-        <Route path="/registerAdmin" element={<RegisterAdmin />} />
         <Route path="/registerEmploye" element={<RegisterEmploye />} />
         <Route path="/assign" element={<Assign />} />
         <Route
