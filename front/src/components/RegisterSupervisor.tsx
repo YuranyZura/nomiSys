@@ -13,17 +13,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { auth, db, firebaseConfig, secondaryAuth } from "@/config/firebase";
+import { db, secondaryAuth } from "@/config/firebase";
 import { setDoc, doc as docFirebase } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
-import { FirebaseError, getApp, getApps, initializeApp } from "firebase/app";
+import { FirebaseError } from "firebase/app";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  signOut,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { supervisorSchema } from "@/zod/SupervisorSchema";
 
 export function RegisterSupervisor() {
@@ -45,7 +41,6 @@ export function RegisterSupervisor() {
   const navigation = useNavigate();
   const { toast } = useToast();
 
- 
   async function onSubmit(values: z.infer<typeof supervisorSchema>) {
     try {
       const { username, doc, direccion, phone, email, password, noCuenta } =

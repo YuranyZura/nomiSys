@@ -41,7 +41,6 @@ export function SignupPropietary() {
   });
 
   const onSubmit = async (values: z.infer<typeof propietarioSchema>) => {
-    console.log("***************PASA POR AQUI***************");
     try {
       const { email, password, phone, doc, username } = values;
       const createdUser = await createUserWithEmailAndPassword(

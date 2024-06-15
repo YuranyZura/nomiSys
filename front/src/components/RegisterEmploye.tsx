@@ -15,10 +15,11 @@ import { Input } from "@/components/ui/input";
 import { v4 as uuid } from "uuid";
 import { db } from "@/config/firebase";
 import { setDoc, doc as docFirebase } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
+import Empresa from "./Empresa";
 
 const formSchema = z.object({
   nombreCompleto: z.string().nonempty({
@@ -50,6 +51,7 @@ const formSchema = z.object({
 export function RegisterEmployee() {
   const navigation = useNavigate();
   const { toast } = useToast();
+  const { id } = useParams();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -65,8 +67,8 @@ export function RegisterEmployee() {
     mode: "onSubmit",
   });
 
- async function onSubmit(values: z.infer<typeof formSchema>) {
-    const id = uuid();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const idToUser = uuid();
 
     try {
       const {
@@ -77,9 +79,10 @@ export function RegisterEmployee() {
         puestoTrabajo,
         telefonoMovil,
         salarioInicial,
+        nombreCompleto,
       } = values;
 
-      const docRef = docFirebase(db, "employees", id);
+      const docRef = docFirebase(db, "employees", idToUser);
       const userRegister = await setDoc(docRef, {
         email,
         fechaInicio,
@@ -88,11 +91,11 @@ export function RegisterEmployee() {
         puestoTrabajo,
         telefonoMovil,
         salarioInicial,
+        nombreCompleto,
+        empresa: id,
       });
 
-      navigation("/login");
-
-      // await signOut(auth);
+      navigation("/dashboard");
     } catch (e: FirebaseError & any) {
       if (e.code === "auth/email-already-in-use") {
         toast({
@@ -116,15 +119,18 @@ export function RegisterEmployee() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen w-1/2 ">
-      <Card className="max-w-screen-md">
+    <div className="flex justify-center items-center h-screen w-full">
+      <Card className="max-w-screen-md w-1/2">
         <CardHeader>
           <CardTitle>Formulario de Registro de Empleados</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8  px-2"
+            >
+              <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
                   name="nombreCompleto"
@@ -138,19 +144,7 @@ export function RegisterEmployee() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="fechaNacimiento"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Fecha de nacimiento</FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name="dni"
@@ -198,6 +192,19 @@ export function RegisterEmployee() {
                 />
                 <FormField
                   control={form.control}
+                  name="salarioInicial"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Salario inicial</FormLabel>
+                      <FormControl>
+                        <Input placeholder="$1000" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="telefonoMovil"
                   render={({ field }) => (
                     <FormItem>
@@ -209,8 +216,6 @@ export function RegisterEmployee() {
                     </FormItem>
                   )}
                 />
-              </div>
-              <div>
                 <FormField
                   control={form.control}
                   name="fechaInicio"
@@ -226,25 +231,27 @@ export function RegisterEmployee() {
                 />
                 <FormField
                   control={form.control}
-                  name="salarioInicial"
+                  name="fechaNacimiento"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Salario inicial</FormLabel>
+                      <FormLabel>Fecha de nacimiento</FormLabel>
                       <FormControl>
-                        <Input placeholder="$1000" {...field} />
+                        <Input type="date" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-            </div>
-            <Button
-              type="submit"
-              className="w-full mt-4 bg-cyan-700 hover:bg-cyan-600"
-            >
-              Registrar
-            </Button>
+              <div className="w-full flex justify-center">
+                <Button
+                  type="submit"
+                  className="w-1/3 mx-auto mt-4 bg-cyan-700 hover:bg-cyan-600"
+                >
+                  Registrar
+                </Button>
+              </div>
+            </form>
           </Form>
         </CardContent>
       </Card>
