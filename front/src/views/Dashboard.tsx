@@ -11,6 +11,7 @@ import { getUserByEmail } from "@/service/user";
 import Empresa from "@/components/Empresa";
 import RegisterEmployee from "@/components/RegisterEmploye";
 import Assign from "@/components/Assign";
+import Payroll from "@/components/Nominas"
 
 const Dashboard = () => {
   const setUser = useStore((state: any) => state.setUser);
@@ -40,6 +41,7 @@ const Dashboard = () => {
         <Route path="/empresas/:id" element={<Empresa />} />
         <Route path="/tarea/:idEmpresa" element={<Assign />} />
         <Route path="/register_empleado/:id" element={<RegisterEmployee />} />
+        <Route path="/nomina" element={<Payroll />} />
       </Routes>
     </div>
   );

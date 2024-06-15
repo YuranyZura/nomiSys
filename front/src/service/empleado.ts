@@ -12,3 +12,5 @@ export const getEmpleadosByEmpresa = async (empresaId: string) => {
   }));
   return empleadosArray;
 };
+
+
